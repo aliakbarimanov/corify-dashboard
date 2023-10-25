@@ -1,3 +1,6 @@
+// import Link
+import {Link} from "react-router-dom";
+
 const Login = () => {
   return (
     <section className="login">
@@ -21,6 +24,7 @@ const Login = () => {
                 </button>
               </div>
             </form>
+            <Link to="/registration">Registration</Link>
           </div>
         </div>
       </div>
