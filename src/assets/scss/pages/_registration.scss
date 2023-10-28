@@ -1,4 +1,4 @@
-.login {
+.registration {
   .container {
     .row {
       height: 93vh;
@@ -32,6 +32,19 @@
 
       .login-box .user-box {
         position: relative;
+
+        &.error{
+          input{
+            border-color: #f00;
+          }
+          label{
+            color: #f00 !important;
+          }
+          .errorMsg{
+            color: #f00;
+            font-size: 13px;
+          }
+        }
       }
 
       .login-box .user-box input {
@@ -41,7 +54,7 @@
         color: #fff;
         margin-bottom: 30px;
         border: none;
-        border-bottom: 1px solid #f00;
+        border-bottom: 1px solid #fff;
         outline: none;
         background: transparent;
       }

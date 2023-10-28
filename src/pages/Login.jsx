@@ -1,6 +1,15 @@
 // import Link
 import {Link} from "react-router-dom";
 
+// import useForm
+import {useForm} from "react-hook-form";
+
+// import object, string
+import {object, string} from "yup";
+
+// import yupResolver
+import { yupResolver } from "@hookform/resolvers/yup";
+
 const Login = () => {
   return (
     <section className="login">
@@ -10,11 +19,11 @@ const Login = () => {
           <div className="login-box">
             <form>
               <div className="user-box">
-                <input type="email" name="email" />
+                <input type="email" name="email" {...register("email")}/>
                 <label>Email</label>
               </div>
               <div className="user-box">
-                <input type="password" name="password" />
+                <input type="password" name="password" {...register("password")}/>
                 <label>Password</label>
               </div>
               <div>

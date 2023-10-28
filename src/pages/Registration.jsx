@@ -1,6 +1,3 @@
-// import useState
-import { useState } from "react";
-
 // import useForm
 import { useForm } from "react-hook-form";
 
@@ -10,7 +7,16 @@ import { object, string } from "yup";
 // import yupResolver
 import { yupResolver } from "@hookform/resolvers/yup";
 
+// import axios
+import axios from "axios";
+
+// import useNavigate
+import { useNavigate } from "react-router-dom";
+
 const Registartion = () => {
+
+  const navigate = useNavigate();
+
   const registerSchema = object({
     name: string()
       .required("Adinizi daxil etmediniz.")
@@ -42,12 +48,18 @@ const Registartion = () => {
     resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+
+    await axios.post(process.env.REACT_APP_REGISTER_NEW_USER, data)
+      .then(res => {
+        console.log(res)
+        navigate("/login");
+      })
+      .catch(err => { console.log(err) });
   };
 
   return (
-    <section className="login">
+    <section className="registration">
       <div className="container">
         <div className="row">
           <h2>Registration Page</h2>
