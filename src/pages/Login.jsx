@@ -19,8 +19,7 @@ import { Context, MainContext } from "../utils/MainContext";
 
 const Login = () => {
 
-  const {userIn} = useContext(Context);
-  console.log(userIn);
+  const {userIn, checkLogin} = useContext(Context);
 
   const loginSchema = object({
     email: string().trim().required("Email yazmadiniz"),
@@ -38,7 +37,9 @@ const Login = () => {
   const onSubmit = async (data) => {
     await axios.post(process.env.REACT_APP_LOGIN, data)
       .then(res=>{
-        localStorage.setItem("token", JSON.stringify(res.data.token))
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        checkLogin();
+        
       })
       .catch(err=>console.log(err))
   }
