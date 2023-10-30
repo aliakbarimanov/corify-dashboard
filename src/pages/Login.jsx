@@ -15,7 +15,7 @@ import axios from "axios";
 
 // import useContext, MainContext
 import { useContext } from "react";
-import { Context, MainContext } from "../utils/MainContext";
+import { Context } from "../utils/MainContext";
 
 const Login = () => {
 
@@ -39,7 +39,6 @@ const Login = () => {
       .then(res=>{
         localStorage.setItem("token", JSON.stringify(res.data.token));
         checkLogin();
-        
       })
       .catch(err=>console.log(err))
   }
@@ -54,10 +53,12 @@ const Login = () => {
               <div className="user-box">
                 <input type="email" name="email" {...register("email")}/>
                 <label>Email</label>
+                {errors.email && <span className="errorMsg">{errors.email.message}</span>}
               </div>
               <div className="user-box">
                 <input type="password" name="password" {...register("password")}/>
                 <label>Password</label>
+                {errors.password && <span className="errorMs">{errors.password.message}</span>}
               </div>
               <div>
                 <button>

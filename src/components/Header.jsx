@@ -7,7 +7,17 @@ import logo from "../assets/images/logo.webp";
 // Icons
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 
+// import useNavigate
+import { useNavigate } from "react-router-dom";
+
+// import useContext, Context
+import { useContext } from "react";
+import { Context } from "../utils/MainContext";
+
 const Header = () => {
+
+  const { logOut, userIn } = useContext(Context);
+
   return (
     <header className="header">
       <div className="container">
@@ -18,27 +28,38 @@ const Header = () => {
             </Link>
           </div>
           <nav className="navBar">
-            <ul className="navList">
-              <li className="navItem">
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li className="navItem">
-                <NavLink to="/all-cars">All Cars</NavLink>
-              </li>
-              <li className="navItem">
-                <NavLink to="/create-car">Add new car</NavLink>
-              </li>
-            </ul>
+            {
+              userIn && (
+                <ul className="navList">
+                  <li className="navItem">
+                    <NavLink to="/">Home</NavLink>
+                  </li>
+                  <li className="navItem">
+                    <NavLink to="/all-cars">All Cars</NavLink>
+                  </li>
+                  <li className="navItem">
+                    <NavLink to="/create-car">Add new car</NavLink>
+                  </li>
+                </ul>
+              )
+            }
           </nav>
           <div className="userArea">
-            <button className="logOut">
-              LOG OUT
-              <FaSignOutAlt />
-            </button>
-            <Link className="login" to="/login">
-              <FaUserCircle />
-              <span>LOG IN</span>
-            </Link>
+            {
+              userIn ? (
+                <button className="logOut" onClick={logOut}>
+                  LOG OUT
+                  <FaSignOutAlt />
+                </button>
+
+              ) : (
+                <Link className="login" to="/login">
+                  <FaUserCircle />
+                  <span>LOG IN</span>
+                </Link>
+
+              )
+            }
           </div>
         </div>
       </div>
