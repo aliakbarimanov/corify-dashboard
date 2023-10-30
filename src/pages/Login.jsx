@@ -10,14 +10,46 @@ import {object, string} from "yup";
 // import yupResolver
 import { yupResolver } from "@hookform/resolvers/yup";
 
+// import axios
+import axios from "axios";
+
+// import useContext, MainContext
+import { useContext } from "react";
+import { Context, MainContext } from "../utils/MainContext";
+
 const Login = () => {
+
+  const {userIn} = useContext(Context);
+  console.log(userIn);
+
+  const loginSchema = object({
+    email: string().trim().required("Email yazmadiniz"),
+    password: string().trim().required("Parol yazmadiniz"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const onSubmit = async (data) => {
+    await axios.post(process.env.REACT_APP_LOGIN, data)
+      .then(res=>{
+        localStorage.setItem("token", JSON.stringify(res.data.token))
+      })
+      .catch(err=>console.log(err))
+  }
+
   return (
     <section className="login">
       <div className="container">
         <div className="row">
           <h2>Login Page</h2>
           <div className="login-box">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="user-box">
                 <input type="email" name="email" {...register("email")}/>
                 <label>Email</label>
