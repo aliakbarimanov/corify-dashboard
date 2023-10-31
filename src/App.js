@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Registartion from "./pages/Registration";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 // Components
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/all-cars" element={<AllCars />} />
           <Route path="/create-car" element={<CreateCar />} />
           <Route path="/edit-car" element={<EditCar />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registartion />} />

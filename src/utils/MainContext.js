@@ -13,31 +13,36 @@ export const MainContext = ({ children }) => {
 
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        checkLogin();
-    }, []);
-
     const [userIn, setUserIn] = useState(false);
     const [user, setUser] = useState({});
 
+    useEffect(() => {
+        checkLogin();
+    }, [userIn]);
+
+
     const logOut = () => {
         localStorage.removeItem("token");
+        setUserIn(false);
     }
 
     const checkLogin = async () => {
         const token = JSON.parse(localStorage.getItem("token"));
-
         const body = { token, };
 
-        await axios.post(process.env.REACT_APP_CHECK_LOGIN, body)
-            .then(res => {
-                setUserIn(true);
-                navigate("/");
-            })
-            .catch(err => {
-                console.log(err)
-                setUserIn(false);
-            })
+        if (token !== null) {
+
+            await axios.post(process.env.REACT_APP_CHECK_LOGIN, body)
+                .then(res => {
+                    setUserIn(true);
+                    setUser(res.data);
+                    navigate("/");
+                })
+                .catch(err => {
+                    console.log(err)
+                    setUserIn(false);
+                })
+        }
     }
 
     const globalStates = { userIn, setUserIn, user, setUser, checkLogin, logOut };

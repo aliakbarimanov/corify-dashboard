@@ -7,9 +7,6 @@ import logo from "../assets/images/logo.webp";
 // Icons
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 
-// import useNavigate
-import { useNavigate } from "react-router-dom";
-
 // import useContext, Context
 import { useContext } from "react";
 import { Context } from "../utils/MainContext";
@@ -45,6 +42,11 @@ const Header = () => {
             }
           </nav>
           <div className="userArea">
+            {
+              userIn && (
+                <Link className="profile" to="/profile">PROFILE</Link>
+              )
+            }
             {
               userIn ? (
                 <button className="logOut" onClick={logOut}>
