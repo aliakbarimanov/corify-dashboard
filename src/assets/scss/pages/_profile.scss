@@ -22,8 +22,9 @@
 
             .profileImg{
                 width: 50%;
+                padding: 0 100px;
                 display: flex;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
 
                 img{
@@ -39,6 +40,10 @@
                 .userInfo{
                     font-size: 20px;
                     padding: 10px 5px;
+                }
+
+                input{
+                  padding: 10px 0;
                 }
             }
         }
