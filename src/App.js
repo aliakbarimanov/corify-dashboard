@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import AllCars from "./pages/AllCars";
 import CreateCar from "./pages/CreateCar";
 import EditCar from "./pages/EditCar";
+import ChangePassword from "./pages/ChangePassword";
 
 // import ProtectedRoutes
 import ProtectedRoutes from "./routes/ProtectedRoutes";
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/create-car" element={<CreateCar />} />
           <Route path="/edit-car" element={<EditCar />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/change-password" element={<ChangePassword />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registartion />} />

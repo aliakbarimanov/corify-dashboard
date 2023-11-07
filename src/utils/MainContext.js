@@ -32,7 +32,7 @@ export const MainContext = ({ children }) => {
 
         if (token !== null) {
 
-            await axios.post(process.env.REACT_APP_CHECK_LOGIN, body)
+            await axios.post("http://localhost:8000/api/check-login", body)
                 .then(res => {
                     setUserIn(true);
                     setUser(res.data);

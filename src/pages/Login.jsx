@@ -35,7 +35,7 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-    await axios.post(process.env.REACT_APP_LOGIN, data)
+    await axios.post( "http://localhost:8000/api/login", data)
       .then(res=>{
         localStorage.setItem("token", JSON.stringify(res.data.token));
         checkLogin();

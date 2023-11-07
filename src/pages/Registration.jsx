@@ -50,9 +50,8 @@ const Registartion = () => {
 
   const onSubmit = async (data) => {
 
-    await axios.post(process.env.REACT_APP_REGISTER_NEW_USER, data)
+    await axios.post("http://localhost:8000/api/register", data)
       .then(res => {
-        console.log(res)
         navigate("/login");
       })
       .catch(err => { console.log(err) });
