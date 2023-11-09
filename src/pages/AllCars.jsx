@@ -4,7 +4,24 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 // Router
 import { Link } from "react-router-dom";
 
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 const AllCars = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getAllData();
+  }, []);
+
+  const getAllData = async () => {
+    await axios
+      .get(process.env.REACT_APP_ALL_PRODUCTS)
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
+  };
+
+
   return (
     <section className="allCars">
       {/* {loading && <Loader />} */}
@@ -23,21 +40,23 @@ const AllCars = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td className="carImg">
-                  <img src="" alt="carImg" />
-                </td>
-                <td>Name</td>
-                <td>Details</td>
-                <td>$0.00</td>
-                <td className="edit">
-                  <Link to="/edit-car">
-                    <FaEdit />
-                  </Link>
-                  <FaTrash />
-                </td>
-              </tr>
+              {data.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{index+1}</td>
+                  <td className="carImg">
+                    <img src={`${process.env.REACT_APP_IMAGE}/${item.productImage}`} alt={item.name} />
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.details}</td>
+                  <td>$ {item.price}</td>
+                  <td className="edit">
+                    <Link to="/edit-car">
+                      <FaEdit />
+                    </Link>
+                    <FaTrash />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
