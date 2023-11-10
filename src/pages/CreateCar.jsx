@@ -5,9 +5,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import { useState } from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const CreateCar = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
+
+  const notify = () => toast("Succesfully added!!");
 
   const imageOnChange = (e) => {
     const file = e.target.files[0];
@@ -29,6 +34,7 @@ const CreateCar = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(createSchema) });
 
@@ -42,10 +48,13 @@ const CreateCar = () => {
     await axios
       .post(process.env.REACT_APP_CREATE_PRODUCT, body)
       .then((res) => {
-        alert("Succesfully added!!");
+        reset();
+        setImage(null);
+        notify();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
+
 
   return (
     <section className="createCar">
@@ -74,9 +83,12 @@ const CreateCar = () => {
                   id="cImg"
                   onChange={imageOnChange}
                 />
-                <div className="previewImage">
-                  <img src={preview} alt="uploaded-img" />
-                </div>
+                {
+                  image &&
+                  <div className="previewImage">
+                    <img src={preview} alt="uploaded-img" />
+                  </div>
+                }
               </div>
               <div className="btn">
                 <button>
@@ -88,6 +100,16 @@ const CreateCar = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnHover
+        theme="dark"
+      />
     </section>
   );
 };

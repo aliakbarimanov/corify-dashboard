@@ -7,8 +7,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AllCars = () => {
   const [data, setData] = useState([]);
+
+  const notify = () => toast("Succesfully deleted!!");
 
   useEffect(() => {
     getAllData();
@@ -20,6 +25,16 @@ const AllCars = () => {
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   };
+
+  const deleteProduct = async (id) => {
+    await axios
+      .delete(`${process.env.REACT_APP_DELETE_PRODUCT}/${id}`)
+      .then(res => {
+        notify();
+        getAllData(res.data);
+      })
+      .catch(err => console.warn(err));
+  }
 
 
   return (
@@ -42,7 +57,7 @@ const AllCars = () => {
             <tbody>
               {data.map((item, index) => (
                 <tr key={item.id}>
-                  <td>{index+1}</td>
+                  <td>{index + 1}</td>
                   <td className="carImg">
                     <img src={`${process.env.REACT_APP_IMAGE}/${item.productImage}`} alt={item.name} />
                   </td>
@@ -50,10 +65,10 @@ const AllCars = () => {
                   <td>{item.details}</td>
                   <td>$ {item.price}</td>
                   <td className="edit">
-                    <Link to="/edit-car">
-                      <FaEdit />
+                    <Link to={`/edit-car/${item.id}`}>
+                      <FaEdit/>
                     </Link>
-                    <FaTrash />
+                    <FaTrash onClick={() => deleteProduct(item.id)} />
                   </td>
                 </tr>
               ))}
@@ -61,6 +76,16 @@ const AllCars = () => {
           </table>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnHover
+        theme="dark"
+      />
     </section>
   );
 };
